@@ -7,9 +7,17 @@ class Item(models.Model):
     description = models.CharField(max_length=255, default ='description')
     price = models.IntegerField()
     type = models.CharField(max_length=255, default='type')
-    img = models.CharField(max_length=255, default='img url')
+    img = models.URLField(max_length=255, default='img url')
 
     def __str__(self):
         return self.menu_item
+
+class NewOrder(models.Model):
+    customer_name = models.CharField(max_length=255, null=True)
+    name = models.JSONField()
+    price = models.IntegerField
+
+    def __str__(self):
+        return self.customer_name
     
     
