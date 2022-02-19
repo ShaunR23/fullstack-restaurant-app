@@ -5,6 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: #fdffe7;  
 }
 
 code {
@@ -30,3 +31,4 @@ h2{
 .order-display{
   margin-top: 80px;
 }
+

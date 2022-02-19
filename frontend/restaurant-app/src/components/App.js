@@ -4,13 +4,14 @@ import Order from "./Order";
 import MENU from "./MenuItems";
 import Header from "../styling/Header";
 import Cookies from "js-cookie";
+import Admin from "./Admin";
 
 
-function App(props) {
-  const [menu, setMenu] = useState(MENU);
+function App({adminOrders, customerName, setCustomerName}) {
+  const [menu, setMenu] = useState(null);
   const [total, setTotal] = useState(0);
   const [newOrder, setNewOrder] = useState([]);
-  const [screen, setScreen] = useState(false);
+  const [selection, setSelection] = useState('menuScreen');
 
   const handleError = (err) => {
     console.warn(err)
@@ -18,8 +19,10 @@ function App(props) {
 
   const payNow = async () => {
     const orders = {
+      customer_name: customerName,
       item: newOrder,
       price: total,
+      active: true,
 
     }
   
@@ -38,20 +41,27 @@ function App(props) {
   if(!response.ok){
     throw new Error("Network response was not OK")
   }
+
+  setTotal(0);
+  setNewOrder([]);
+  setCustomerName('Customer');
+  selection('menuScreen');
 }
 
-useEffect(() => {
-  const getItem = async () => {
-    const response = await fetch('/items/').catch(handleError);
-    if(!response.ok){
-      throw new Error ('Network response was not OK!')   }else{
+  useEffect(() => {
+    const getItem = async () => {
+      const response = await fetch('/items/').catch(handleError);
+      if(!response.ok){
+        throw new Error ('Network response was not OK!')   
+      } else {
+        console.log('data', 'what')
         const data = await response.json();
+        console.log('data', data)
         setMenu(data);
+        }
       }
-    }
-
-    getItem();
-  }, []);
+      getItem();
+    }, []);
 
   if(!menu) {
     return <div>Fetching data...</div>
@@ -65,6 +75,7 @@ useEffect(() => {
   const typeDessert = menu.filter((menu) => menu.type === "Dessert");
 
   const order = (item, price) => {
+    console.log(item, price)
     const newOrderItem = {
       item,
       price,
@@ -98,7 +109,7 @@ useEffect(() => {
   const menuScreen = (
     <>
       <p>Your Total is ${total}.00</p>
-      <button onClick={() => setScreen(true)}>Your Order</button>
+      <button onClick={() => setSelection('myOrder')}>Your Order</button>
       <div class="row">
         <h2>Tacos</h2>
         <div id="Tacos" class="display col-md-6 col-lg-3">
@@ -116,6 +127,7 @@ useEffect(() => {
         <div id="Desserts" class="display  col-md-6 col-lg-3">
           {dessertDisplay}
         </div>
+        <button type='button' name='admin' className='adminButton' onClick={adminOrders} >Get Admin</button>
       </div>
     </>
   );
@@ -148,8 +160,12 @@ useEffect(() => {
 
   return (
     <>
-      <Header />
-      {screen ? myOrder : menuScreen}
+      <Header setSelection={setSelection} />
+
+
+        {selection == 'menuScreen' ? menuScreen : null}
+        {selection == 'myOrder' ? myOrder : null}
+        {selection == 'admin' ? <Admin />: null}
     </>
   );
 }

@@ -12,12 +12,14 @@ class Item(models.Model):
     def __str__(self):
         return self.menu_item
 
-class NewOrder(models.Model):
+class OrderList(models.Model):
     customer_name = models.CharField(max_length=255, null=True)
-    name = models.JSONField()
+    item = models.CharField(max_length=255)
     price = models.IntegerField
 
     def __str__(self):
         return self.customer_name
-    
+
+
+
     

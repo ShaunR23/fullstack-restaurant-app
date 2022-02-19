@@ -8,12 +8,13 @@ import { Col } from "react-bootstrap";
 import { Row } from "react-bootstrap";
 
 
-function MenuList({item, price,description, subtotal,order, img,}) {
+function MenuList({menu_item, price,description, subtotal,order, img,}) {
+ 
     
     const addToOrder = (e) => {
         e.preventDefault()
         subtotal(price);
-        order(item,price)
+        order(menu_item,price)
 
     }
     
@@ -24,7 +25,7 @@ function MenuList({item, price,description, subtotal,order, img,}) {
             <Card style={{ width: '19rem' }}>
             <Card.Img variant="top" src={img} />
             <Card.Body>
-            <Card.Title>{item}</Card.Title>
+            <Card.Title>{menu_item}</Card.Title>
             <Card.Text>
             {description}
             </Card.Text>
