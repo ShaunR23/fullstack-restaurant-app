@@ -30,7 +30,8 @@ DEBUG = True
 ALLOWED_HOSTS = [
     '127.0.0.1',
     'localhost',
-    'fullstack-restauraunt-app-sr23.herokuapp.com',
+    'fullstack-restaurant-app-sr23.herokuapp.com',
+
 ]
 
 
@@ -44,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
+    
     
     'frontend.apps.FrontendConfig',
     'rest_framework',

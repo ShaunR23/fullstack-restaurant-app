@@ -9,7 +9,7 @@ function Header({setSelection}) {
   return (
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
       <Container>
-        <Navbar.Brand href="#home">Shaun's Steak n Tacos</Navbar.Brand>
+        <Navbar.Brand onClick={() => setSelection('menuScreen')}>Shaun's Steak n Tacos</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">

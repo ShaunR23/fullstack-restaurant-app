@@ -14,8 +14,10 @@ class Item(models.Model):
 
 class OrderList(models.Model):
     customer_name = models.CharField(max_length=255, null=True)
-    item = models.CharField(max_length=255)
+    items = models.JSONField(null=True)
     price = models.IntegerField
+    active = models.BooleanField(null=True)
+
 
     def __str__(self):
         return self.customer_name

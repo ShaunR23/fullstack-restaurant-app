@@ -1,40 +1,24 @@
 import Cookies from "js-cookie";
 import { useState } from "react";
 import App from "./App"
+import ActiveOrders from "./ActiveOrders";
+import CompletedOrders from "./CompletedOrders";
 
 
 
 
-function Admin({total, newOrder, order}){
+function Admin(props){
     const [activeOrder, setActiveOrder] = useState([])
-    const [customerName, setCustomerName] = useState('')
-
+    
     const handleError = (err) => {
         console.warn(err)
       }
 
-    const adminOrders = () => {
-        const getOrders = async() =>{
-            const response = await fetch('/items/orders').catch(handleError);
-            if(!response.ok) {
-                throw new Error('Network response was not OK!')
-            }else{
-                const data = await response.json();
-                setActiveOrder(data);
-            }
-        }
-
-        getOrders();
-
-        if(!activeOrder) {
-            return <div>Fetching data...</div>
-        }
-    }
-
+   
     
     const completeOrder = async (pk, customerName, newOrder, total) => {
         const completeOrders = {
-            customer: customerName,
+            customer_name: customerName,
             item: newOrder,
             price: total,
             active: false,
@@ -90,23 +74,26 @@ function Admin({total, newOrder, order}){
 
     
     const adminDisplayActive = filterActiveOrder.map(order => (
-        {...order}, completeOrder={completeOrder} 
+       <ActiveOrders key={order.id} {...order} completeOrder={completeOrder} />
     ));
     const adminDisplayCompleted = filterCompletedOrder.map(order => (
-         {...order} ));
+       <CompletedOrders  key={order.id} {...order} />
+    ));
 
   
 
     return (
         <>
-        <h3 className='adminDisplay'></h3>
-        <h3 className='activeOrderDisplay col-6'>Active Orders</h3>
-        <h3 className='completedOrderDisplay col-6'></h3>
+        <h3 className='adminDisplay col-12'>Active/Completed Orders</h3>
+        <div class='row adminContainer'>
+        <h3 className='menuOrderDisplay col-6'>Active Orders</h3>
+        <h3 className='menuOrderDisplay col-6'>Completed Orders</h3>
+        </div>
         <div className='col-6'>{adminDisplayActive}</div>
         <div className='col-6'> {adminDisplayCompleted}</div>
-        <button type='button' name='admin' className='adminButton' onClick={adminOrders} >Get Admin</button>
-        <button type='button' name='completeButton' className='completeButton' onClick={completeOrder} >Complete Order</button>
-        <button type='button' name='cancelButton' className='cancelButton' onClick={cancelOrder} >Cancel Order</button>
+        {/* <button type='button' name='admin' className='adminButton' onClick={adminOrders} >Get Admin</button> */}
+        
+        
         </>
     )
 }

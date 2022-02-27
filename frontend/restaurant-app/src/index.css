@@ -29,6 +29,13 @@ h2{
 }
 
 .order-display{
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
   margin-top: 80px;
+}
+
+h3 h4 h6 {
+  justify-content: center;
 }
 
